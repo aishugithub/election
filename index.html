@@ -1,77 +1,112 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Voting Booth</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Elections</title>
   <style>
-    body { font-family: sans-serif; background: #eef2f7; text-align: center; padding: 30px; }
-    .candidate { margin: 20px; display: inline-block; }
-    .candidate img { width: 150px; height: 150px; border-radius: 10px; }
-    .candidate h3 { margin: 10px 0; }
-    .vote-btn { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-    #message { margin-top: 20px; font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+    }
+    h1 {
+      color: #333;
+    }
+    .category {
+      margin: 30px 0;
+    }
+    .candidates {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .candidate {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      width: 150px;
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .candidate:hover {
+      transform: scale(1.05);
+    }
+    .candidate img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .message {
+      font-weight: bold;
+      color: green;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>Cast Your Vote</h1>
-  <input type="text" id="regno" placeholder="Enter Your Reg. No">
+  <h1>Student Elections</h1>
 
-  <h2>SPL - Boys</h2>
-  <div class="candidate">
-    <img src="rahul.jpg" alt="Rahul">
-    <h3>Rahul</h3>
-    <button class="vote-btn" onclick="castVote('Rahul', 'Boys')">Vote</button>
-  </div>
-  <div class="candidate">
-    <img src="arjun.jpg" alt="Arjun">
-    <h3>Arjun</h3>
-    <button class="vote-btn" onclick="castVote('Arjun', 'Boys')">Vote</button>
-  </div>
-  <div class="candidate">
-    <img src="manoj.jpg" alt="Manoj">
-    <h3>Manoj</h3>
-    <button class="vote-btn" onclick="castVote('Manoj', 'Boys')">Vote</button>
-  </div>
-  <div class="candidate">
-    <img src="sachin.jpg" alt="Sachin">
-    <h3>Sachin</h3>
-    <button class="vote-btn" onclick="castVote('Sachin', 'Boys')">Vote</button>
+  <div class="category">
+    <h2>SPL - Boys</h2>
+    <div class="candidates" id="boys">
+      <!-- Candidate buttons will be injected here -->
+    </div>
   </div>
 
-  <h2>SPL - Girls</h2>
-  <div class="candidate">
-    <img src="anita.jpg" alt="Anita">
-    <h3>Anita</h3>
-    <button class="vote-btn" onclick="castVote('Anita', 'Girls')">Vote</button>
-  </div>
-  <div class="candidate">
-    <img src="meena.jpg" alt="Meena">
-    <h3>Meena</h3>
-    <button class="vote-btn" onclick="castVote('Meena', 'Girls')">Vote</button>
-  </div>
-  <div class="candidate">
-    <img src="latha.jpg" alt="Latha">
-    <h3>Latha</h3>
-    <button class="vote-btn" onclick="castVote('Latha', 'Girls')">Vote</button>
+  <div class="category">
+    <h2>SPL - Girls</h2>
+    <div class="candidates" id="girls">
+      <!-- Candidate buttons will be injected here -->
+    </div>
   </div>
 
-  <div id="message"></div>
+  <div class="message" id="message"></div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbz7ISo4bTmODc6sTBoVf6JlCyOZaO5a7BoQAa54MwSkzlXEQHb3uOdULGGCc1SYY0b2hA/execSCRIPT_URL_HERE";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwDWsYQyjb1wGWWgYIYyzaQahqSHBbdaoJZSkllc_j3PlXkbsdyqgMUn0G2Pdic3q8wqA/exec";
+
+    const boysCandidates = [
+      { name: "Aryan", img: "boy1.jpg" },
+      { name: "Ravi", img: "boy2.jpg" },
+      { name: "Kabir", img: "boy3.jpg" },
+      { name: "Yash", img: "boy4.jpg" },
+    ];
+
+    const girlsCandidates = [
+      { name: "Sneha", img: "girl1.jpg" },
+      { name: "Meera", img: "girl2.jpg" },
+      { name: "Anjali", img: "girl3.jpg" },
+    ];
+
+    function renderCandidates(category, list) {
+      const container = document.getElementById(category);
+      list.forEach(candidate => {
+        const div = document.createElement("div");
+        div.className = "candidate";
+        div.innerHTML = `
+          <img src="images/${candidate.img}" alt="${candidate.name}" />
+          <div>${candidate.name}</div>
+        `;
+        div.onclick = () => castVote(candidate.name, category.charAt(0).toUpperCase() + category.slice(1));
+        container.appendChild(div);
+      });
+    }
 
     function castVote(candidate, category) {
-      const regno = document.getElementById('regno').value.trim();
-      if (!regno) return alert("Please enter your Reg. No");
-
-      fetch(`${scriptURL}?mode=vote&regno=${regno}&candidate=${candidate}&category=${category}`)
+      fetch(`${scriptURL}?mode=vote&candidate=${encodeURIComponent(candidate)}&category=${category}`)
         .then(res => res.text())
-        .then(txt => {
-          document.getElementById('message').textContent = txt;
+        .then(text => {
+          document.getElementById("message").textContent = text;
         })
-        .catch(err => alert("Error: " + err));
+        .catch(err => {
+          document.getElementById("message").textContent = "Voting failed. Try again.";
+        });
     }
+
+    renderCandidates("boys", boysCandidates);
+    renderCandidates("girls", girlsCandidates);
   </script>
 </body>
 </html>

@@ -1,37 +1,52 @@
-<!-- admin.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin - Enable Voter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Voting Access</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 40px; background: #f5f7fa; }
-    h1 { color: #2c3e50; }
-    input { padding: 10px; font-size: 16px; margin-right: 10px; }
-    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-    #message { margin-top: 20px; font-weight: bold; color: green; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fefae0;
+      text-align: center;
+      padding-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
+    #status {
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
   </style>
 </head>
 <body>
-  <h1>Enable Student for Voting</h1>
-  <input type="text" id="regno" placeholder="Enter Registration Number">
-  <button onclick="enableVoting()">Enable</button>
-
-  <div id="message"></div>
+  <h1>Admin - Enable Voting</h1>
+  <p>Enter the student's registration number below to allow them to vote.</p>
+  <input type="text" id="regno" placeholder="Enter Reg No" />
+  <button onclick="enableVoting()">Enable Voting</button>
+  <div id="status"></div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbz7ISo4bTmODc6sTBoVf6JlCyOZaO5a7BoQAa54MwSkzlXEQHb3uOdULGGCc1SYY0b2hA/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwDWsYQyjb1wGWWgYIYyzaQahqSHBbdaoJZSkllc_j3PlXkbsdyqgMUn0G2Pdic3q8wqA/exec";
 
     function enableVoting() {
-      const regno = document.getElementById('regno').value.trim();
-      if (!regno) return alert("Please enter a valid registration number.");
-
-      fetch(`${scriptURL}?mode=enable&regno=${regno}`)
+      const regno = document.getElementById("regno").value.trim();
+      if (!regno) {
+        document.getElementById("status").textContent = "Please enter a Reg No.";
+        return;
+      }
+      fetch(`${scriptURL}?mode=enable&regno=${encodeURIComponent(regno)}`)
         .then(res => res.text())
-        .then(txt => {
-          document.getElementById('message').textContent = txt;
+        .then(text => {
+          document.getElementById("status").textContent = text;
         })
-        .catch(err => alert("Error: " + err));
+        .catch(err => {
+          document.getElementById("status").textContent = "Failed to enable voting. Please try again.";
+        });
     }
   </script>
 </body>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Election Results</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #d4fc79, #96e6a1);
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #2f3e46;
+      font-size: 3em;
+    }
+    .results {
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .card {
+      background: #ffffffcc;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      width: 250px;
+      transition: transform 0.3s ease-in-out;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card h2 {
+      margin: 10px 0;
+      color: #333;
+    }
+    .winner {
+      border: 3px solid gold;
+      animation: glow 1s infinite alternate;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 10px gold; }
+      to { box-shadow: 0 0 20px orange; }
+    }
+  </style>
+</head>
+<body>
+  <h1>📢 Election Results</h1>
+  <div id="results" class="results"></div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwDWsYQyjb1wGWWgYIYyzaQahqSHBbdaoJZSkllc_j3PlXkbsdyqgMUn0G2Pdic3q8wqA/exec";
+
+    fetch(scriptURL)
+      .then(response => response.json())
+      .then(data => displayResults(data))
+      .catch(() => {
+        document.getElementById("results").textContent = "Failed to load results.";
+      });
+
+    function displayResults(data) {
+      const boys = data.filter(d => d.category === "Boys");
+      const girls = data.filter(d => d.category === "Girls");
+
+      const topBoy = getTopCandidate(boys);
+      const topGirl = getTopCandidate(girls);
+
+      renderCards(boys, topBoy);
+      renderCards(girls, topGirl);
+    }
+
+    function getTopCandidate(group) {
+      return group.reduce((max, candidate) => candidate.votes > max.votes ? candidate : max, group[0]);
+    }
+
+    function renderCards(group, topCandidate) {
+      group.forEach(({ candidate, category, votes }) => {
+        const div = document.createElement("div");
+        div.className = "card" + (candidate === topCandidate.candidate && category === topCandidate.category ? " winner" : "");
+        div.innerHTML = `<h2>${candidate}</h2><p><strong>${category}</strong></p><p>🗳️ ${votes} votes</p>`;
+        document.getElementById("results").appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
