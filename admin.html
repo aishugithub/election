@@ -1,0 +1,38 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Enable Voter</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 40px; background: #f5f7fa; }
+    h1 { color: #2c3e50; }
+    input { padding: 10px; font-size: 16px; margin-right: 10px; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #message { margin-top: 20px; font-weight: bold; color: green; }
+  </style>
+</head>
+<body>
+  <h1>Enable Student for Voting</h1>
+  <input type="text" id="regno" placeholder="Enter Registration Number">
+  <button onclick="enableVoting()">Enable</button>
+
+  <div id="message"></div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbz7ISo4bTmODc6sTBoVf6JlCyOZaO5a7BoQAa54MwSkzlXEQHb3uOdULGGCc1SYY0b2hA/exec";
+
+    function enableVoting() {
+      const regno = document.getElementById('regno').value.trim();
+      if (!regno) return alert("Please enter a valid registration number.");
+
+      fetch(`${scriptURL}?mode=enable&regno=${regno}`)
+        .then(res => res.text())
+        .then(txt => {
+          document.getElementById('message').textContent = txt;
+        })
+        .catch(err => alert("Error: " + err));
+    }
+  </script>
+</body>
+</html>

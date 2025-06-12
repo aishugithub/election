@@ -1,161 +1,77 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>School Election Voting Booth</title>
+  <title>Student Voting Booth</title>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
-      padding: 20px;
-      text-align: center;
-    }
-    h1 {
-      color: #1c3d5a;
-    }
-    .category {
-      margin-top: 40px;
-    }
-    .candidate-grid {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .candidate {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      width: 180px;
-      padding: 10px;
-      transition: transform 0.2s;
-    }
-    .candidate:hover {
-      transform: scale(1.03);
-    }
-    .candidate img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-    .candidate h3 {
-      margin: 10px 0;
-      color: #333;
-    }
-    .vote-btn {
-      background-color: #1a73e8;
-      color: white;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .vote-btn:disabled {
-      background-color: #aaa;
-      cursor: not-allowed;
-    }
-    #message {
-      margin-top: 30px;
-      font-size: 18px;
-      font-weight: bold;
-      color: green;
-    }
+    body { font-family: sans-serif; background: #eef2f7; text-align: center; padding: 30px; }
+    .candidate { margin: 20px; display: inline-block; }
+    .candidate img { width: 150px; height: 150px; border-radius: 10px; }
+    .candidate h3 { margin: 10px 0; }
+    .vote-btn { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #message { margin-top: 20px; font-weight: bold; }
   </style>
 </head>
 <body>
+  <h1>Cast Your Vote</h1>
+  <input type="text" id="regno" placeholder="Enter Your Reg. No">
 
-<h1>🗳️ School Election Voting Booth</h1>
-<p>Enter your Registration Number and cast your vote below!</p>
-
-<!-- SPL – Boys Section -->
-<div class="category">
-  <h2>SPL – Boys</h2>
-  <div class="candidate-grid">
-    <div class="candidate">
-      <img src="rahul.jpg" alt="Rahul">
-      <h3>Rahul</h3>
-      <button class="vote-btn" data-category="SPL-Boys" onclick="castVote('SPL-Boys', 'Rahul')">Vote</button>
-    </div>
-    <div class="candidate">
-      <img src="arjun.jpg" alt="Arjun">
-      <h3>Arjun</h3>
-      <button class="vote-btn" data-category="SPL-Boys" onclick="castVote('SPL-Boys', 'Arjun')">Vote</button>
-    </div>
-    <div class="candidate">
-      <img src="vikram.jpg" alt="Vikram">
-      <h3>Vikram</h3>
-      <button class="vote-btn" data-category="SPL-Boys" onclick="castVote('SPL-Boys', 'Vikram')">Vote</button>
-    </div>
-    <div class="candidate">
-      <img src="dinesh.jpg" alt="Dinesh">
-      <h3>Dinesh</h3>
-      <button class="vote-btn" data-category="SPL-Boys" onclick="castVote('SPL-Boys', 'Dinesh')">Vote</button>
-    </div>
+  <h2>SPL - Boys</h2>
+  <div class="candidate">
+    <img src="rahul.jpg" alt="Rahul">
+    <h3>Rahul</h3>
+    <button class="vote-btn" onclick="castVote('Rahul', 'Boys')">Vote</button>
   </div>
-</div>
-
-<!-- SPL – Girls Section -->
-<div class="category">
-  <h2>SPL – Girls</h2>
-  <div class="candidate-grid">
-    <div class="candidate">
-      <img src="anjali.jpg" alt="Anjali">
-      <h3>Anjali</h3>
-      <button class="vote-btn" data-category="SPL-Girls" onclick="castVote('SPL-Girls', 'Anjali')">Vote</button>
-    </div>
-    <div class="candidate">
-      <img src="meera.jpg" alt="Meera">
-      <h3>Meera</h3>
-      <button class="vote-btn" data-category="SPL-Girls" onclick="castVote('SPL-Girls', 'Meera')">Vote</button>
-    </div>
-    <div class="candidate">
-      <img src="sneha.jpg" alt="Sneha">
-      <h3>Sneha</h3>
-      <button class="vote-btn" data-category="SPL-Girls" onclick="castVote('SPL-Girls', 'Sneha')">Vote</button>
-    </div>
-    <div class="candidate">
-      <img src="deepa.jpg" alt="Deepa">
-      <h3>Deepa</h3>
-      <button class="vote-btn" data-category="SPL-Girls" onclick="castVote('SPL-Girls', 'Deepa')">Vote</button>
-    </div>
+  <div class="candidate">
+    <img src="arjun.jpg" alt="Arjun">
+    <h3>Arjun</h3>
+    <button class="vote-btn" onclick="castVote('Arjun', 'Boys')">Vote</button>
   </div>
-</div>
+  <div class="candidate">
+    <img src="manoj.jpg" alt="Manoj">
+    <h3>Manoj</h3>
+    <button class="vote-btn" onclick="castVote('Manoj', 'Boys')">Vote</button>
+  </div>
+  <div class="candidate">
+    <img src="sachin.jpg" alt="Sachin">
+    <h3>Sachin</h3>
+    <button class="vote-btn" onclick="castVote('Sachin', 'Boys')">Vote</button>
+  </div>
 
-<!-- Status Message -->
-<div id="message"></div>
+  <h2>SPL - Girls</h2>
+  <div class="candidate">
+    <img src="anita.jpg" alt="Anita">
+    <h3>Anita</h3>
+    <button class="vote-btn" onclick="castVote('Anita', 'Girls')">Vote</button>
+  </div>
+  <div class="candidate">
+    <img src="meena.jpg" alt="Meena">
+    <h3>Meena</h3>
+    <button class="vote-btn" onclick="castVote('Meena', 'Girls')">Vote</button>
+  </div>
+  <div class="candidate">
+    <img src="latha.jpg" alt="Latha">
+    <h3>Latha</h3>
+    <button class="vote-btn" onclick="castVote('Latha', 'Girls')">Vote</button>
+  </div>
 
-<!-- Script -->
-<script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbylhbilnjhkuNXooBNUrlOYfUMV_bDAJORRzB1npF7xnjTSdk5cnTcFVlLZKhU4PeEn1Q/exec"; // Replace with your Apps Script Web App URL
+  <div id="message"></div>
 
-  function castVote(category, candidate) {
-    const studentID = prompt("Enter your Registration Number:");
-    if (!studentID || studentID.trim() === "") {
-      alert("You must enter your RegNo to vote.");
-      return;
+  <script>
+    const scriptURL = "YOUR_https://script.google.com/macros/s/AKfycbz7ISo4bTmODc6sTBoVf6JlCyOZaO5a7BoQAa54MwSkzlXEQHb3uOdULGGCc1SYY0b2hA/execSCRIPT_URL_HERE";
+
+    function castVote(candidate, category) {
+      const regno = document.getElementById('regno').value.trim();
+      if (!regno) return alert("Please enter your Reg. No");
+
+      fetch(`${scriptURL}?mode=vote&regno=${regno}&candidate=${candidate}&category=${category}`)
+        .then(res => res.text())
+        .then(txt => {
+          document.getElementById('message').textContent = txt;
+        })
+        .catch(err => alert("Error: " + err));
     }
-
-    const url = `${scriptURL}?studentID=${encodeURIComponent(studentID)}&category=${encodeURIComponent(category)}&candidate=${encodeURIComponent(candidate)}`;
-
-    fetch(url)
-      .then(res => res.text())
-      .then(response => {
-        document.getElementById("message").textContent = response;
-
-        // Disable only buttons in the voted category
-        document.querySelectorAll(`.vote-btn[data-category='${category}']`).forEach(btn => {
-          btn.disabled = true;
-        });
-      })
-      .catch(error => {
-        alert("Vote failed. Please try again.");
-        console.error("Error!", error.message);
-      });
-  }
-</script>
-
+  </script>
 </body>
 </html>
