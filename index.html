@@ -70,62 +70,66 @@
 <h1>🗳️ School Election Voting Booth</h1>
 <p>Enter your Registration Number and cast your vote below!</p>
 
+<!-- SPL – Boys Section -->
 <div class="category">
   <h2>SPL – Boys</h2>
   <div class="candidate-grid">
     <div class="candidate">
       <img src="rahul.jpg" alt="Rahul">
       <h3>Rahul</h3>
-      <button class="vote-btn" onclick="castVote('SPL-Boys', 'Rahul')">Vote</button>
+      <button class="vote-btn" data-category="SPL-Boys" onclick="castVote('SPL-Boys', 'Rahul')">Vote</button>
     </div>
     <div class="candidate">
       <img src="arjun.jpg" alt="Arjun">
       <h3>Arjun</h3>
-      <button class="vote-btn" onclick="castVote('SPL-Boys', 'Arjun')">Vote</button>
+      <button class="vote-btn" data-category="SPL-Boys" onclick="castVote('SPL-Boys', 'Arjun')">Vote</button>
     </div>
     <div class="candidate">
       <img src="vikram.jpg" alt="Vikram">
       <h3>Vikram</h3>
-      <button class="vote-btn" onclick="castVote('SPL-Boys', 'Vikram')">Vote</button>
+      <button class="vote-btn" data-category="SPL-Boys" onclick="castVote('SPL-Boys', 'Vikram')">Vote</button>
     </div>
     <div class="candidate">
       <img src="dinesh.jpg" alt="Dinesh">
       <h3>Dinesh</h3>
-      <button class="vote-btn" onclick="castVote('SPL-Boys', 'Dinesh')">Vote</button>
+      <button class="vote-btn" data-category="SPL-Boys" onclick="castVote('SPL-Boys', 'Dinesh')">Vote</button>
     </div>
   </div>
 </div>
 
+<!-- SPL – Girls Section -->
 <div class="category">
   <h2>SPL – Girls</h2>
   <div class="candidate-grid">
     <div class="candidate">
       <img src="anjali.jpg" alt="Anjali">
       <h3>Anjali</h3>
-      <button class="vote-btn" onclick="castVote('SPL-Girls', 'Anjali')">Vote</button>
+      <button class="vote-btn" data-category="SPL-Girls" onclick="castVote('SPL-Girls', 'Anjali')">Vote</button>
     </div>
     <div class="candidate">
       <img src="meera.jpg" alt="Meera">
       <h3>Meera</h3>
-      <button class="vote-btn" onclick="castVote('SPL-Girls', 'Meera')">Vote</button>
+      <button class="vote-btn" data-category="SPL-Girls" onclick="castVote('SPL-Girls', 'Meera')">Vote</button>
     </div>
     <div class="candidate">
       <img src="sneha.jpg" alt="Sneha">
       <h3>Sneha</h3>
-      <button class="vote-btn" onclick="castVote('SPL-Girls', 'Sneha')">Vote</button>
+      <button class="vote-btn" data-category="SPL-Girls" onclick="castVote('SPL-Girls', 'Sneha')">Vote</button>
     </div>
     <div class="candidate">
       <img src="deepa.jpg" alt="Deepa">
       <h3>Deepa</h3>
-      <button class="vote-btn" onclick="castVote('SPL-Girls', 'Deepa')">Vote</button>
+      <button class="vote-btn" data-category="SPL-Girls" onclick="castVote('SPL-Girls', 'Deepa')">Vote</button>
     </div>
   </div>
 </div>
 
+<!-- Status Message -->
 <div id="message"></div>
 
+<!-- Script -->
 <script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbylhbilnjhkuNXooBNUrlOYfUMV_bDAJORRzB1npF7xnjTSdk5cnTcFVlLZKhU4PeEn1Q/exec"; // Replace with your deployed Apps Script URL
+  const scriptURL = "https://script.google.com/macros/s/AKfycbylhbilnjhkuNXooBNUrlOYfUMV_bDAJORRzB1npF7xnjTSdk5cnTcFVlLZKhU4PeEn1Q/exec"; // Replace with your Apps Script Web App URL
 
   function castVote(category, candidate) {
     const studentID = prompt("Enter your Registration Number:");
@@ -140,7 +144,11 @@
       .then(res => res.text())
       .then(response => {
         document.getElementById("message").textContent = response;
-        document.querySelectorAll(".vote-btn").forEach(btn => btn.disabled = true);
+
+        // Disable only buttons in the voted category
+        document.querySelectorAll(`.vote-btn[data-category='${category}']`).forEach(btn => {
+          btn.disabled = true;
+        });
       })
       .catch(error => {
         alert("Vote failed. Please try again.");
